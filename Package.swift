@@ -35,9 +35,17 @@ let package = Package(
     // instead. That overlay is required there: a `path:` package takes its identity from
     // the directory name, so pairing it with a sibling that depends on MistKit by `url:`
     // makes SwiftPM resolve two distinct packages and fail with "multiple similar targets
-    // 'MistKit', 'MistKitOpenAPI'". Standalone there is no such sibling, so this uses the
-    // tagged release — which is also what makes a tag of this package usable downstream.
-    .package(url: "https://github.com/brightdigit/MistKit.git", from: "1.0.0-beta.4"),
+    // 'MistKit', 'MistKitOpenAPI'". Standalone there is no such sibling, so this uses a
+    // remote reference.
+    //
+    // ⚠️ INTEGRATION BRANCH — do not merge to `main` and do not tag from here.
+    // `main` carries `from: "1.0.0-beta.4"`; this branch tracks the unreleased MistKit
+    // release branch so consumers can exercise MistKitConfiguration against features that
+    // have not shipped yet (e.g. #444's `ZoneType` / `ZoneInfo.deleted`). A branch pin is
+    // rejected by `dependency-policy.yml` on PRs to `main`, which is the intended guard.
+    // Retire this branch once MistKit 1.0.0-beta.5 is tagged: bump `main` to
+    // `from: "1.0.0-beta.5"` and cut MistKitConfiguration 1.0.0-beta.2 instead.
+    .package(url: "https://github.com/brightdigit/MistKit.git", branch: "v1.0.0-beta.5"),
     .package(
       url: "https://github.com/brightdigit/ConfigKeyKit.git",
       from: "1.0.0-beta.3"
