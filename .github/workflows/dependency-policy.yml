@@ -7,6 +7,12 @@ name: Dependency Policy
 
 on:
   pull_request:
+    # `ready_for_review` is required: the job is gated on `draft == false`, and that
+    # condition is evaluated against the payload of the event that queued the run.
+    # Without this type, flipping a draft to ready fires no new run, so the gate stays
+    # `skipped` from its draft-time evaluation and never actually checks the PR it is
+    # meant to block. Re-running does not help — a re-run replays the stale payload.
+    types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
 
