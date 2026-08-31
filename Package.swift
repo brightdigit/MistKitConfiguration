@@ -38,13 +38,9 @@ let package = Package(
     // 'MistKit', 'MistKitOpenAPI'". Standalone there is no such sibling, so this uses the
     // tagged release — which is also what makes a tag of this package usable downstream.
     .package(url: "https://github.com/brightdigit/MistKit.git", from: "1.0.0-beta.4"),
-    // Temporary: ConfigKeyKit#8 (boolean resolution) is on main but not yet tagged.
-    // Swap to `from: "<tag>"` once a release carrying that fix exists — MistKitConfiguration
-    // PRs targeting main must use only tagged dependencies (`dependency-policy.yml`) once
-    // the PR leaves draft.
     .package(
       url: "https://github.com/brightdigit/ConfigKeyKit.git",
-      branch: "main"
+      from: "1.0.0-beta.3"
     ),
     .package(
       url: "https://github.com/apple/swift-configuration.git",
